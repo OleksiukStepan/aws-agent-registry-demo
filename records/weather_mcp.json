@@ -1,0 +1,62 @@
+{
+  "name": "weather-mcp-server",
+  "displayName": "Weather MCP Server",
+  "description": "Current conditions and short-range forecasts for a city or coordinates.",
+  "recordType": "MCP",
+  "recordVersion": "1.0.0",
+  "approve": true,
+  "descriptors": {
+    "mcpServer": {
+      "dataSchemaVersion": "2025-12-11",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.oleksiukstepan/weather-mcp-server",
+        "description": "Current conditions and short-range forecasts for a city or coordinates.",
+        "version": "1.0.0",
+        "repository": {
+          "url": "https://github.com/OleksiukStepan/weather-mcp-server",
+          "source": "github"
+        },
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://weather.internal.example.com/mcp"
+          }
+        ]
+      },
+      "additionalData": {
+        "tools": {
+          "dataSchemaVersion": "2025-11-25",
+          "data": {
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Return current temperature, humidity and wind for a location.",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "city": { "type": "string", "description": "City name, e.g. Kyiv" },
+                    "units": { "type": "string", "enum": ["metric", "imperial"], "default": "metric" }
+                  },
+                  "required": ["city"]
+                }
+              },
+              {
+                "name": "get_forecast",
+                "description": "Return a daily forecast for up to seven days ahead.",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "city": { "type": "string" },
+                    "days": { "type": "integer", "minimum": 1, "maximum": 7, "default": 3 }
+                  },
+                  "required": ["city"]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

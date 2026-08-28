@@ -1,0 +1,24 @@
+{
+  "name": "internal-billing-api",
+  "displayName": "Internal Billing API",
+  "description": "Draft record kept unapproved on purpose: an internal-only Lambda API that must not appear in the shared catalog.",
+  "recordType": "CUSTOM",
+  "recordVersion": "0.1.0",
+  "approve": false,
+  "descriptors": {
+    "custom": {
+      "data": {
+        "kind": "aws-lambda-api",
+        "name": "internal-billing-api",
+        "description": "Issues invoices and applies credit notes for internal cost allocation.",
+        "owner": "finance-platform",
+        "confidentiality": "internal-only",
+        "functionArn": "arn:aws:lambda:us-east-1:183631317727:function:internal-billing-api",
+        "operations": [
+          { "name": "issue_invoice", "description": "Create an invoice for a cost centre." },
+          { "name": "apply_credit_note", "description": "Offset a previously issued invoice." }
+        ]
+      }
+    }
+  }
+}

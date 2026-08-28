@@ -1,0 +1,32 @@
+{
+  "name": "parcel-dispatch-skill",
+  "displayName": "Parcel Dispatch Skill",
+  "description": "House rules for issuing waybills: address normalisation, payer defaults and what to do when a city is ambiguous.",
+  "recordType": "SKILL",
+  "recordVersion": "1.0.0",
+  "approve": true,
+  "descriptors": {
+    "agentSkillsDefinition": {
+      "data": {
+        "id": "parcel-dispatch",
+        "name": "Parcel Dispatch",
+        "description": "House rules for issuing waybills through the shipping MCP server.",
+        "tags": [
+          "logistics",
+          "shipping",
+          "waybill",
+          "operations"
+        ],
+        "requiredTools": [
+          "create_ttn",
+          "quote_delivery"
+        ]
+      },
+      "additionalData": {
+        "skillMd": {
+          "data": "---\nname: parcel-dispatch\ndescription: House rules for issuing waybills through the shipping MCP server.\n---\n\n# Parcel Dispatch\n\nHow to issue a waybill correctly on the first attempt.\n\n## Before creating a waybill\n\n1. Normalise both city names to their official spelling. `Kiev`, `Kyiv` and `KYIV` all mean the same settlement, but the carrier API matches on the exact string.\n2. Call `quote_delivery` first. If the quote exceeds the declared value of the goods, stop and ask the operator instead of shipping.\n3. Weight below 0.1 kg is rejected by the carrier. Round up rather than sending zero.\n\n## Choosing the payer\n\nDefault to `recipient` for retail orders and `sender` for warranty returns. When the order record carries an explicit `payer` field, that field wins.\n\n## Ambiguous destinations\n\nUkraine has several settlements sharing a name, for example Mykolaiv in three different oblasts. When the destination is ambiguous:\n\n- Use the oblast from the customer address if present.\n- Otherwise return the candidate list to the operator. Never guess.\n\n## After dispatch\n\nStore the tracking number against the order before replying to the customer. A waybill that exists in the carrier system but not in our records is the single most common source of support tickets.\n"
+        }
+      }
+    }
+  }
+}

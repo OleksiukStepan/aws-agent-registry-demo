@@ -1,0 +1,78 @@
+{
+  "name": "shipping-mcp-server",
+  "displayName": "Shipping MCP Server",
+  "description": "Creates waybills, quotes delivery cost and tracks parcels through a Ukrainian carrier network.",
+  "recordType": "MCP",
+  "recordVersion": "1.0.0",
+  "approve": true,
+  "descriptors": {
+    "mcpServer": {
+      "dataSchemaVersion": "2025-12-11",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.oleksiukstepan/shipping-mcp-server",
+        "description": "Creates waybills, quotes delivery cost and tracks parcels through a Ukrainian carrier network.",
+        "version": "1.0.0",
+        "repository": {
+          "url": "https://github.com/OleksiukStepan/shipping-mcp-server",
+          "source": "github"
+        },
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://shipping.internal.example.com/mcp"
+          }
+        ]
+      },
+      "additionalData": {
+        "tools": {
+          "dataSchemaVersion": "2025-11-25",
+          "data": {
+            "tools": [
+              {
+                "name": "create_ttn",
+                "description": "Issue a waybill for a parcel and return its tracking number.",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "sender_city": { "type": "string" },
+                    "recipient_city": { "type": "string" },
+                    "recipient_phone": { "type": "string" },
+                    "weight_kg": { "type": "number", "minimum": 0.1 },
+                    "declared_value_uah": { "type": "number", "minimum": 0 },
+                    "payer": { "type": "string", "enum": ["sender", "recipient"], "default": "recipient" }
+                  },
+                  "required": ["sender_city", "recipient_city", "recipient_phone", "weight_kg"]
+                }
+              },
+              {
+                "name": "quote_delivery",
+                "description": "Estimate delivery cost and transit time before issuing a waybill.",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "sender_city": { "type": "string" },
+                    "recipient_city": { "type": "string" },
+                    "weight_kg": { "type": "number" }
+                  },
+                  "required": ["sender_city", "recipient_city", "weight_kg"]
+                }
+              },
+              {
+                "name": "track_parcel",
+                "description": "Return the current status and location history of a parcel.",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "tracking_number": { "type": "string" }
+                  },
+                  "required": ["tracking_number"]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

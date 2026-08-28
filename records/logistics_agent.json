@@ -1,0 +1,55 @@
+{
+  "name": "logistics-orchestrator-agent",
+  "displayName": "Logistics Orchestrator Agent",
+  "description": "Plans and executes an end-to-end shipment: picks a carrier, issues the waybill and reports progress.",
+  "recordType": "AGENT",
+  "recordVersion": "1.0.0",
+  "approve": true,
+  "descriptors": {
+    "a2aAgentCard": {
+      "dataSchemaVersion": "0.3",
+      "data": {
+        "protocolVersion": "0.3.0",
+        "name": "Logistics Orchestrator Agent",
+        "description": "Plans and executes an end-to-end shipment: picks a carrier, issues the waybill and reports progress.",
+        "url": "https://logistics.internal.example.com/a2a",
+        "preferredTransport": "JSONRPC",
+        "version": "1.0.0",
+        "provider": {
+          "organization": "Platform Engineering",
+          "url": "https://github.com/OleksiukStepan"
+        },
+        "capabilities": {
+          "streaming": true,
+          "pushNotifications": false,
+          "stateTransitionHistory": true
+        },
+        "defaultInputModes": ["text/plain", "application/json"],
+        "defaultOutputModes": ["application/json"],
+        "skills": [
+          {
+            "id": "plan-shipment",
+            "name": "Plan a shipment",
+            "description": "Chooses a carrier and service level from origin, destination, weight and deadline.",
+            "tags": ["logistics", "planning", "carrier-selection"],
+            "examples": ["Ship a 2 kg parcel from Lviv to Kyiv by tomorrow"]
+          },
+          {
+            "id": "dispatch-shipment",
+            "name": "Dispatch a shipment",
+            "description": "Issues the waybill through the shipping MCP server and returns the tracking number.",
+            "tags": ["logistics", "fulfilment"],
+            "examples": ["Create the waybill for order 10432"]
+          },
+          {
+            "id": "report-status",
+            "name": "Report shipment status",
+            "description": "Summarises where a parcel is and when it is expected to arrive.",
+            "tags": ["logistics", "tracking"],
+            "examples": ["Where is my parcel 59000123456789?"]
+          }
+        ]
+      }
+    }
+  }
+}
