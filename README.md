@@ -114,6 +114,26 @@ $ .venv/bin/python -m pytest tests -q
 The last two lines are the point of the whole exercise. The draft record's id is known,
 the caller is authorized, and the data plane still answers `RESOURCE_NOT_FOUND`.
 
+## Screenshots
+
+Registry provisioned by `infra/registry.py`. Auto-approval is disabled, so nothing reaches
+consumers without a curator decision.
+
+![Registry details](docs/screenshots/01-registry-ready.png)
+
+Five records submitted, four approved, one held in `Draft` on purpose.
+
+![Registry records](docs/screenshots/02-records-table.png)
+
+An approved MCP record with its descriptor and version.
+
+![Record details](docs/screenshots/03-record-detail.png)
+
+The consumer CLI: semantic search, a batch-get where the draft record's known id returns
+`RESOURCE_NOT_FOUND`, and the governance test suite.
+
+![Discovery CLI and tests](docs/screenshots/04-terminal.png)
+
 ## Design decisions
 
 **Manual approval, not auto-approval.** `approvalConfiguration={"autoApprovalRules": []}`.
