@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FindRegistries",
+      "Effect": "Allow",
+      "Action": "agent-registry:ListRegistries",
+      "Resource": "arn:aws:agent-registry:*:183631317727:*"
+    },
+    {
+      "Sid": "DiscoveryOnly",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:GetRegistry",
+        "agent-registry:ListDiscoverableRegistryRecords",
+        "agent-registry:SearchDiscoverableRegistryRecords",
+        "agent-registry:GetDiscoverableRegistryRecord"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:registry/*"
+    }
+  ]
+}

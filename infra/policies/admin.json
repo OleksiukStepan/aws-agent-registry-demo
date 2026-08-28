@@ -1,0 +1,65 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CreateAndListRegistries",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:CreateRegistry",
+        "agent-registry:ListRegistries"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:*"
+    },
+    {
+      "Sid": "ManageRegistry",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:GetRegistry",
+        "agent-registry:UpdateRegistry",
+        "agent-registry:DeleteRegistry",
+        "agent-registry:ListRegistryRecords"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:registry/*"
+    },
+    {
+      "Sid": "CurateRecords",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:GetRegistryRecord",
+        "agent-registry:UpdateRegistryRecordStatus",
+        "agent-registry:DeleteRegistryRecord"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:registry/*/record/*"
+    },
+    {
+      "Sid": "Tagging",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:TagResource",
+        "agent-registry:UntagResource",
+        "agent-registry:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:*"
+    },
+    {
+      "Sid": "RegistryManagedWorkloadIdentity",
+      "Effect": "Allow",
+      "Action": "bedrock-agentcore:*WorkloadIdentity*",
+      "Resource": [
+        "arn:aws:bedrock-agentcore:*:183631317727:workload-identity-directory/default",
+        "arn:aws:bedrock-agentcore:*:183631317727:workload-identity-directory/default/*"
+      ]
+    },
+    {
+      "Sid": "ServiceLinkedRoleForRegistry",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "arn:aws:iam::*:role/aws-service-role/agent-registry.amazonaws.com/AWSServiceRoleForAgentRegistry",
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": "agent-registry.amazonaws.com"
+        }
+      }
+    }
+  ]
+}

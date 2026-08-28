@@ -1,0 +1,31 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FindRegistries",
+      "Effect": "Allow",
+      "Action": "agent-registry:ListRegistries",
+      "Resource": "arn:aws:agent-registry:*:183631317727:*"
+    },
+    {
+      "Sid": "ReadRegistryAndOwnRecords",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:GetRegistry",
+        "agent-registry:CreateRegistryRecord",
+        "agent-registry:ListRegistryRecords"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:registry/*"
+    },
+    {
+      "Sid": "EditAndSubmitRecords",
+      "Effect": "Allow",
+      "Action": [
+        "agent-registry:GetRegistryRecord",
+        "agent-registry:UpdateRegistryRecord",
+        "agent-registry:SubmitRegistryRecordForApproval"
+      ],
+      "Resource": "arn:aws:agent-registry:*:183631317727:registry/*/record/*"
+    }
+  ]
+}
